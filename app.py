@@ -8,7 +8,7 @@ DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 db = SQLAlchemy(app)
 cursor = conn.cursor()
-create_table_query = '''CREATE TABLE User
+create_table_query = '''CREATE TABLE Users
           (ID INT PRIMARY KEY NOT NULL,
           username TEXT NOT NULL); '''
 cursor.execute(create_table_query)
@@ -22,7 +22,7 @@ def submit():
     if request.method == 'POST':
         try:
             passw = request.form['passw']
-            insert_query = """ INSERT INTO User (ID, username) VALUES (1, passw)"""
+            insert_query = """ INSERT INTO Users (ID, username) VALUES (1, passw)"""
             cursor.execute(insert_query)
             conn.commit()
             conn.close()
