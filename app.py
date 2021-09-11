@@ -22,7 +22,7 @@ def submit():
     if request.method == 'POST':
         try:
             passw = request.form['passw']
-            insert_query = """ INSERT INTO Users (ID, username) VALUES (1, passw)"""
+            insert_query = """ INSERT INTO Users (ID, username) VALUES (451, passgfhgfw)"""
             cursor.execute(insert_query)
             conn.commit()
             conn.close()
