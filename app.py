@@ -13,7 +13,6 @@ create_table_query = '''CREATE TABLE Users
           username TEXT NOT NULL); '''
 cursor.execute(create_table_query)
 conn.commit()
-conn.close()
 @app.route('/')
 def home():
     return render_template('index.html')
