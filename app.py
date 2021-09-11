@@ -1,17 +1,19 @@
 from flask import Flask,render_template,request
 from flask_sqlalchemy import SQLAlchemy
 import os
+import psycopg2
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 db = SQLAlchemy(app)
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    def __repr__(self):
-        return '<User %r>' % self.username
+cursor = conn.cursor()
+create_table_query = '''CREATE TABLE User
+          (ID INT PRIMARY KEY NOT NULL,
+          username TEXT NOT NULL); '''
+cursor.execute(create_table_query)
+conn.commit()
+conn.close()
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -20,9 +22,10 @@ def submit():
     if request.method == 'POST':
         try:
             passw = request.form['passw']
-            us = User(username=passw)
-            db.session().add(us)
-            db.session().commit()
+            insert_query = """ INSERT INTO User (ID, username) VALUES (1, passw)"""
+            cursor.execute(insert_query)
+            conn.commit()
+            conn.close()
             return 'YES'
         except:
             return 'NO'
