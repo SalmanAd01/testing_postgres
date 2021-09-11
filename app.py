@@ -6,7 +6,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://wfspaxroxdrcdc:2217189141cf4
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db = SQLAlchemy(app)
 
-class UserS1(db.Model):
+class UserS12(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     def __repr__(self):
@@ -19,7 +19,7 @@ def submit():
     if request.method == 'POST':
         try:
             passw = request.form['passw']
-            us = UserS1(username=passw)
+            us = UserS12(username=passw)
             db.session().add(us)
             db.session().commit()
             return 'YES'
