@@ -13,6 +13,7 @@ class UserS12(db.Model):
         return '<User %r>' % self.username
 @app.route('/')
 def home():
+    print(os.getenv('USERNAME'))
     return render_template('index.html')
 @app.route('/submit',methods=['GET', 'POST'])
 def submit():
